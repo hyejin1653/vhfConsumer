@@ -1,0 +1,37 @@
+syntax = "proto3";
+package vhf;
+
+message VHF_Signal {
+	string   deviceName = 1;
+    int32  channel = 2;
+    string  startTime = 3;
+    string  endTime = 4;
+    bool  isTX =5;
+    string site = 6;
+    bytes  buffer = 7;
+}
+
+
+enum SignalType {
+    None = 0;
+   Voice = 1;
+   Control = 2;
+}
+
+message VHF
+{
+    SignalType datatype =1;
+    oneof payload{
+        RTPPacket voice = 2;
+          ControlPacket ctrl = 3;
+   }
+  
+}
+
+message RTPPacket {
+    bytes buffer = 1;
+}
+
+message ControlPacket {
+    string payload = 1;
+}
